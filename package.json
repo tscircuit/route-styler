@@ -1,0 +1,55 @@
+{
+  "name": "@tscircuit/route-styler",
+  "version": "0.0.1",
+  "description": "A DRC-safe Circuit JSON beautifier built as a solver pipeline",
+  "module": "lib/index.ts",
+  "types": "lib/index.ts",
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tscircuit/route-styler.git"
+  },
+  "scripts": {
+    "start": "cosmos",
+    "dev": "cosmos",
+    "build:site": "cosmos-export",
+    "typecheck": "bunx tsc --noEmit",
+    "test": "bun test",
+    "test:update": "BUN_UPDATE_SNAPSHOTS=1 bun test",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.8",
+    "@flatten-js/core": "^1.6.13",
+    "@tscircuit/checks": "^0.0.162",
+    "@tscircuit/math-utils": "^0.0.36",
+    "@types/bun": "latest",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "bun-match-svg": "^0.0.16",
+    "circuit-json-to-connectivity-map": "^0.0.27",
+    "circuit-to-svg": "^0.0.403",
+    "react": "^19.2.8",
+    "react-cosmos": "^7.3.0",
+    "react-cosmos-plugin-vite": "^7.3.0",
+    "react-dom": "^19.2.8",
+    "schematic-symbols": "^0.0.239",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@tscircuit/circuit-json-util": "^0.0.107",
+    "@tscircuit/solver-utils": "^0.0.19",
+    "circuit-json": "^0.0.469",
+    "graphics-debug": "^0.0.99"
+  }
+}
