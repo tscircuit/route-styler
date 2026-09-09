@@ -65,4 +65,15 @@ describe("route point cleanup safety", () => {
     expect(cleanup.removedRoutePointCount).toBe(2)
     expect(cleanup.route).toEqual([route[0]!, route[3]!])
   })
+
+  test("skips an omitted route instead of throwing", () => {
+    expect(removeConsecutiveDuplicateWirePoints(undefined)).toEqual({
+      route: [],
+      removedRoutePointCount: 0,
+    })
+    expect(removeRedundantCollinearWirePoints(undefined)).toEqual({
+      route: [],
+      removedRoutePointCount: 0,
+    })
+  })
 })

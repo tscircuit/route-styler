@@ -51,12 +51,12 @@ const isExactlyCollinearAndBetween = (
 }
 
 export const removeConsecutiveDuplicateWirePoints = (
-  route: PcbTraceRoutePoint[],
+  route: PcbTraceRoutePoint[] | undefined,
 ): RouteCleanupResult => {
   const cleanedRoute: PcbTraceRoutePoint[] = []
   let removedRoutePointCount = 0
 
-  for (const point of route) {
+  for (const point of route ?? []) {
     const previousPoint = cleanedRoute.at(-1)
     if (
       previousPoint &&
@@ -86,12 +86,12 @@ const canRemoveCollinearMiddlePoint = (
 }
 
 export const removeRedundantCollinearWirePoints = (
-  route: PcbTraceRoutePoint[],
+  route: PcbTraceRoutePoint[] | undefined,
 ): RouteCleanupResult => {
   const cleanedRoute: PcbTraceRoutePoint[] = []
   let removedRoutePointCount = 0
 
-  for (const point of route) {
+  for (const point of route ?? []) {
     cleanedRoute.push(point)
 
     while (cleanedRoute.length >= 3) {
