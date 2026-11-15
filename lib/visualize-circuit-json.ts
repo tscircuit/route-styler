@@ -16,9 +16,10 @@ export const visualizeCircuitJson = (
   return {
     title,
     coordinateSystem: "cartesian",
-    lines: traces.flatMap((trace) =>
-      trace.route.slice(1).flatMap((point, index) => {
-        const previousPoint = trace.route[index]!
+    lines: traces.flatMap((trace) => {
+      const route = trace.route ?? []
+      return route.slice(1).flatMap((point, index) => {
+        const previousPoint = route[index]!
         if (!hasPoint(previousPoint) || !hasPoint(point)) return []
 
         return [
@@ -32,10 +33,10 @@ export const visualizeCircuitJson = (
             label: trace.pcb_trace_id,
           },
         ]
-      }),
-    ),
+      })
+    }),
     points: traces.flatMap((trace) =>
-      trace.route.flatMap((point) =>
+      (trace.route ?? []).flatMap((point) =>
         hasPoint(point)
           ? [
               {
