@@ -103,6 +103,44 @@ describe("RouteStylerPipelineSolver", () => {
     expect(twice).toEqual(once)
   })
 
+  test("skips pcb_trace entries that omit route instead of throwing", () => {
+    const unrouted = {
+      type: "pcb_trace",
+      pcb_trace_id: "pcb_trace_unrouted",
+    } as const
+    const circuitJson = [
+      {
+        type: "pcb_board",
+        pcb_board_id: "pcb_board_0",
+        center: { x: 0, y: 0 },
+        width: 12,
+        height: 8,
+        thickness: 1.6,
+        num_layers: 2,
+        material: "fr4",
+      },
+      unrouted,
+    ] as Parameters<typeof beautifyCircuitJson>[0]
+
+    const solver = new RouteStylerPipelineSolver(circuitJson)
+    expect(() => solver.initialVisualize()).not.toThrow()
+    expect(() => solver.solve()).not.toThrow()
+    expect(solver.solved).toBe(true)
+    expect(solver.failed).toBe(false)
+    expect(() => solver.finalVisualize()).not.toThrow()
+
+    const output = beautifyCircuitJson(circuitJson)
+    expect(
+      output.find((element) => element.type === "pcb_trace"),
+    ).toMatchObject({
+      type: "pcb_trace",
+      pcb_trace_id: "pcb_trace_unrouted",
+    })
+    expect(
+      output.find((element) => element.type === "pcb_trace"),
+    ).not.toHaveProperty("route")
+  })
+
   test("introduces no new tscircuit/checks issues after any stage", async () => {
     const input = createRouteStylerExample()
     const solver = new RouteStylerPipelineSolver(input)
